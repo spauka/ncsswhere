@@ -5,15 +5,19 @@ import sqlite3
 def create(conn):
     c = conn.cursor()
     # Create the ncsser table
-    c.execute('CREATE TABLE ncsser (name TEXT PRIMARY KEY, years TEXT, uni INTEGER, cs BOOL, degree TEXT);')
+    c.execute('CREATE TABLE ncsser (name TEXT PRIMARY KEY, years TEXT, uni INTEGER, degree TEXT);')
 
     # Create a table of universities
     c.execute('CREATE TABLE unis (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT)')
+
+    # Create a table of degrees
+    c.execute('CREATE TABLE degrees (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, cs INTEGER)')
 
     conn.commit()
 
     # Populate the initial list
     populate_unis(conn)
+    populate_degrees(conn)
 
 def populate_unis(conn):
     unis = ['Australian Catholic Uni',
@@ -50,6 +54,25 @@ def populate_unis(conn):
 
     c = conn.cursor()
     c.executemany('INSERT INTO unis (name) VALUES (?)', unis)
+    conn.commit()
+
+def populate_degrees(conn):
+    degrees = [('Computer Science', True),
+              ('Computer Engineering', True),
+              ('IT', True),
+              ('Physics', False),
+              ('Chemistry', False),
+              ('Biology', False),
+              ('Mechanical Engineering', False),
+              ('Electrical Engineering', False),
+              ('Mecatronics', False),
+              ('Other Engineering', False),
+              ('Arts', False),
+              ('Other', False),
+             ]
+
+    c = conn.cursor()
+    c.executemany('INSERT INTO degrees (name, cs) VALUES (?, ?)', degrees)
     conn.commit()
 
 if __name__ == '__main__':
