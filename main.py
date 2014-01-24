@@ -37,6 +37,20 @@ def post_ncsser():
     else:
         redirect('/')
 
+@post('/degree')
+def add_degree():
+    degree = request.forms.get('degree')
+    if not degree:
+        redirect('/')
+        return
+
+    conn = database.connect()
+    c = conn.cursor()
+    c.execute('INSERT INTO degrees (name, cs) VALUES (?, 0)', (degree, ))
+    conn.commit()
+
+    return "Added %s to the DB"
+
 # Static files
 @route('/css/<filename>')
 def css(filename):
