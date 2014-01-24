@@ -1,5 +1,5 @@
 import sqlite3
-from bottle import get, post, request, route, run, jinja2_template, static_file
+from bottle import get, post, request, route, run, jinja2_template, static_file, redirect
 
 import database
 
@@ -15,15 +15,27 @@ def ncsser():
     context['unis'] = database.get_unis(conn)
     context['degrees'] = database.get_degrees(conn)
 
+    conn.close()
+
     return jinja2_template('ncsser.html', context)
 
 @post('/ncsser')
 def post_ncsser():
     # Get the data from the request
     name = request.forms.get('name')
+    years_stud = request.forms.getall('years_stud')
+    years_tut = request.forms.getall('years_tut')
+    unis = request.forms.getall('uni')[0]
+    degrees = request.forms.getall('degree')[0]
 
+    # Finally, add data to the DB!
+    conn = database.connect()
+    success = database.submit_student(conn, name, years_stud, years_tut, unis, degrees)
 
-    redirect('/')
+    if not success:
+        return "You're already in the DB!"
+    else:
+        redirect('/')
 
 # Static files
 @route('/css/<filename>')

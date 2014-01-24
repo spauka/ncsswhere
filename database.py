@@ -25,6 +25,11 @@ def get_degrees(conn):
 def submit_student(conn, name, years_stud, years_tutor, uni, degree):
     c = conn.cursor()
 
+    # Check if the person is already in the DB
+    count = list(c.execute('SELECT * FROM ncsser WHERE name LIKE ?', (name,)))
+    if len(count):
+        return False
+
     # Add the person into the database
     c.execute('INSERT INTO ncsser (name, uni, degree) VALUES (?, ?, ?)', (name, uni, degree))
     personid = c.lastrowid
@@ -36,6 +41,7 @@ def submit_student(conn, name, years_stud, years_tutor, uni, degree):
         c.execute('INSERT INTO years (ncssid, year, tutor) VALUES (?, ?, 1)', (personid, year,))
 
     conn.commit()
+    return True
 
 def connect():
     return sqlite3.connect('ncss.db')
