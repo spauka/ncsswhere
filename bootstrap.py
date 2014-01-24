@@ -11,7 +11,7 @@ def create(conn):
     c.execute('CREATE TABLE years (id INTEGER PRIMARY KEY AUTOINCREMENT, ncssid INTEGER, year INTEGER, tutor INTEGER);')
 
     # Store the unis/degrees that people attended/did
-    c.execute('CREATE TABLE ncss_unis (id INTEGER PRIMARY KEY AUTOINCREMENT, ncssid INTEGER, uni INTEGER);')
+    c.execute('CREATE TABLE ncss_unis (id INTEGER PRIMARY KEY AUTOINCREMENT, ncssid INTEGER, uni INTEGER, lat REAL, lng REAL);')
     c.execute('CREATE TABLE ncss_degrees (id INTEGER PRIMARY KEY AUTOINCREMENT, ncssid INTEGER, degree INTEGER);')
 
     # Create a table of universities
@@ -27,40 +27,43 @@ def create(conn):
     populate_degrees(conn)
 
 def populate_unis(conn):
-    unis = ['Australian Catholic Uni',
-            'Australian National Uni',
-            'Bond Uni',
-            'Central QLD Uni',
-            'Charles Darwin Uni',
-            'Charles Stuart Uni',
-            'Curtin Uni',
-            'Edith Cowan Uni',
-            'Flinders Uni',
-            'Griffith Uni',
-            'James Cook Uni',
-            'La Trobe',
-            'Macquarie',
-            'Monash',
-            'Murdoch Uni',
-            'QUT',
-            'RMIT',
-            'Southern Cross',
-            'Swinbourne',
-            'Adelaide',
-            'Ballarat',
-            'Canberra',
-            'Melbourne',
-            'New England',
-            'UNSW',
-            'UTas',
-            'USyd',
-            'UWS',
-            'UOW',
-            'UWA']
-    unis = [(uni,) for uni in unis]
+    unis = [('Australian Catholic Uni', -33.836683,151.20389),
+            ('Australian National Uni', -35.277647,149.118627),
+            ('Bond Uni', -28.072681,153.416902),
+            ('Central QLD Uni', -23.322888,150.520867),
+            ('Charles Darwin Uni', -12.371778,130.868987),
+            ('Charles Stuart Uni', 43.357887,-79.787482),
+            ('Curtin Uni', -32.006256,115.894515),
+            ('Edith Cowan Uni', -31.919166,115.869109),
+            ('Flinders Uni', 0,0),
+            ('Griffith Uni', 0,0),
+            ('James Cook Uni', 0,0),
+            ('La Trobe', 0,0),
+            ('Macquarie', 0,0),
+            ('Monash', 0,0),
+            ('Murdoch Uni', 0,0),
+            ('QUT', 0,0),
+            ('RMIT', 0,0),
+            ('Southern Cross', 0,0),
+            ('Swinbourne', 0,0),
+            ('Adelaide', 0,0),
+            ('Ballarat', 0,0),
+            ('Canberra', 0,0),
+            ('Melbourne', 0,0),
+            ('New England', 0,0),
+            ('UNSW', -31.919166,115.869109),
+            ('UTas', -42.90181,147.327598),
+            ('USyd', -33.889922,151.190604),
+			('University of Technology Sydney', -33.883955,151.201054),
+            ('UWS', 0,0),
+            ('UOW', 0,0),
+            ('UWA', 0,0),
+			('Other', 0,0),
+           ]
+    unis = [(uni, lat, lng) for uni, lat, lng in unis]
 
     c = conn.cursor()
-    c.executemany('INSERT INTO unis (name) VALUES (?)', unis)
+    c.executemany('INSERT INTO unis (name, lat, lng) VALUES (?, ?, ?)', unis)
     conn.commit()
 
 def populate_degrees(conn):
