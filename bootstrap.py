@@ -73,6 +73,8 @@ def populate_degrees(conn):
               ('Physics', False),
               ('Chemistry', False),
               ('Biology', False),
+              ('Mathematics', False),
+              ('Other Science', False),
               ('Mechanical Engineering', False),
               ('Electrical Engineering', False),
               ('Mecatronics', False),
