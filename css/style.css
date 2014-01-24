@@ -92,6 +92,10 @@ form {
 		padding: 10px;
 	}
 
+#doughnutchart {
+    margin: auto;
+}
+
 #map {
 	height: 500px;
 }
