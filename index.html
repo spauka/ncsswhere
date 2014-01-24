@@ -24,22 +24,28 @@
             // Now calculate the number of people doing degrees
             var yes = 0;
             var no = 0;
+            var notAtUni = 0;
             data.forEach(function(entry) {
-                doesCS = false;
-                CSDegrees.forEach(function(degree) {
-                    if (jQuery.inArray(degree, entry.degrees) != -1)
-                        doesCS = true;
-                });
-                if (doesCS)
-                    yes++;
-                else
-                    no++;
+                if (entry.degrees.length == 0) {
+                    notAtUni++;
+                }else{
+                    doesCS = false;
+                    CSDegrees.forEach(function(degree) {
+                        if (jQuery.inArray(degree, entry.degrees) != -1)
+                            doesCS = true;
+                    });
+                    if (doesCS)
+                        yes++;
+                    else
+                       no++;
+                }
             });
 
             var CS = new google.visualization.arrayToDataTable([
                 ["Does Computer Science?", "Number"],
                 ["Comp Sci", yes],
-                ["Other", no]]);
+                ["Other", no],
+                ["Not At Uni", notAtUni]]);
 
             var options = {
                 pieHole: 0.4,
