@@ -1,7 +1,7 @@
 import sqlite3
 from collections import namedtuple
 
-Uni = namedtuple('Uni', ['id', 'name'])
+Uni = namedtuple('Uni', ['id', 'name', 'lat', 'lng'])
 Degree = namedtuple('Degree', ['id', 'name', 'cs'])
 NCSSer = namedtuple('NCSSer', ['id', 'name', 'years_stud', 'years_tut', 'unis', 'degrees'])
 
@@ -9,7 +9,7 @@ def get_unis(conn):
     c = conn.cursor()
 
     unis = []
-    for uni in c.execute('SELECT id, name FROM unis'):
+    for uni in c.execute('SELECT id, name, lat, lng FROM unis'):
         unis.append(Uni(*uni))
 
     return unis
