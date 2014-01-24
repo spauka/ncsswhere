@@ -23,24 +23,46 @@
 		<h1>NCSS</h1><h2>Where are they now?</h2>
 		<p>Where are your fellow NCSSers? <a href="/">view the map</a></p>
 	</header>
-
+	
 	<article>
 		<form action="/ncsser" method="POST">
 			<p>
 				<label for="name">What is your name?</label>
 				<input name="name"></input>
 			</p>
+		
+			<p>
+				<label for="years_stud">In what years did you attend NCSS as a student?</label>
+				<select name=years_stud" multiple>
+					{% for year in range(1995, 2015) %}
+					<option value="{{year}}">{{year}}</option>
+					{% endfor %}
+				</select>
+			</p>
 
 			<p>
-				<label for="years">When did you attend NCSS?</label>
-				<input name="years"></input>
+				<label for="years_tut">In what years did you attend NCSS as a tutor?</label>
+				<select name=years_tut" multiple>
+					{% for year in range(1995, 2015) %}
+					<option value="{{year}}">{{year}}</option>
+					{% endfor %}
+				</select>
 			</p>
 
 			<p>
 				<label for="uni">Which Uni did/do you go to?</label>
 				<select name="uni" multiple>
 					{% for uni in unis %}
-					<option value={{uni.id}}>{{uni.name}}</option>
+					<option value="{{uni.id}}">{{uni.name}}</option>
+					{% endfor %}
+				</select>
+			</p>
+
+			<p>
+				<label for="degree">What degree did/do you do?</label>
+				<select name="degree" multiple>
+					{% for degree in degrees %}
+					<option value="{{degree.id}}">{{degree.name}}</option>
 					{% endfor %}
 				</select>
 			</p>

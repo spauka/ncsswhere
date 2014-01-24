@@ -5,7 +5,10 @@ import sqlite3
 def create(conn):
     c = conn.cursor()
     # Create the ncsser table
-    c.execute('CREATE TABLE ncsser (name TEXT PRIMARY KEY, years TEXT, uni INTEGER, degree TEXT);')
+    c.execute('CREATE TABLE ncsser (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, uni INTEGER, degree INTEGER);')
+
+    # Store the years people attended
+    c.execute('CREATE TABLE years (id INTEGER PRIMARY KEY AUTOINCREMENT, ncssid INTEGER, year INTEGER, tutor INTEGER);')
 
     # Create a table of universities
     c.execute('CREATE TABLE unis (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT)')
