@@ -51,8 +51,11 @@
         }
 
         function getData() {
-            $.getJSON("/api/ncsser").done(function(data) {
-                    genChart(data);
+            $.getJSON("/api/ncsser").done(function(ncssers) {
+                    genChart(ncssers);
+					$.getJSON("/api/unis").done(function(unis) {
+                    	loadMapMarkers(ncssers, unis);
+					});
             });
         }
     </script>
