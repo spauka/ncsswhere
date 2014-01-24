@@ -15,7 +15,7 @@ def create(conn):
     c.execute('CREATE TABLE ncss_degrees (id INTEGER PRIMARY KEY AUTOINCREMENT, ncssid INTEGER, degree INTEGER);')
 
     # Create a table of universities
-    c.execute('CREATE TABLE unis (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT)')
+    c.execute('CREATE TABLE unis (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, lat REAL, lng REAL)')
 
     # Create a table of degrees
     c.execute('CREATE TABLE degrees (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, cs INTEGER)')
@@ -77,7 +77,7 @@ def populate_degrees(conn):
               ('Other Science', False),
               ('Mechanical Engineering', False),
               ('Electrical Engineering', False),
-              ('Mecatronics', False),
+              ('Mechatronics', False),
               ('Other Engineering', False),
               ('Arts', False),
               ('Other', False),
