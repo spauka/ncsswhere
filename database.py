@@ -22,7 +22,7 @@ def get_degrees(conn):
 
     return degrees
 
-def submit_student(conn, name, years_stud, years_tutor, uni, degree):
+def submit_student(conn, name, years_stud, years_tutor, unis, degrees):
     c = conn.cursor()
 
     # Check if the person is already in the DB
@@ -31,8 +31,14 @@ def submit_student(conn, name, years_stud, years_tutor, uni, degree):
         return False
 
     # Add the person into the database
-    c.execute('INSERT INTO ncsser (name, uni, degree) VALUES (?, ?, ?)', (name, uni, degree))
+    c.execute('INSERT INTO ncsser (name) VALUES (?)', (name,))
     personid = c.lastrowid
+
+    # Add unis and degrees
+    for uni in unis:
+        c.execute('INSERT INTO ncss_unis (ncssid, uni) VALUES (?, ?)', (personid, uni))
+    for degree in degrees:
+        c.execute('INSERT INTO ncss_degrees (ncssid, degree) VALUES (?, ?)', (personid, degree))
 
     # And add the years into the database as well!
     for year in years_stud:
