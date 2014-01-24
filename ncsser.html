@@ -39,7 +39,6 @@
 					{% endfor %}
 				</select>
 			</p>
-
 			<p>
 				<label for="years_tut">In what years did you attend NCSS as a tutor?</label>
 				<select name=years_tut" multiple>
@@ -58,16 +57,7 @@
 				</select>
 			</p>
 
-			<p>
-				<label for="degree">What degree did/do you do?</label>
-				<select name="degree" multiple>
-					{% for degree in degrees %}
-					<option value="{{degree.id}}">{{degree.name}}</option>
-					{% endfor %}
-				</select>
-			</p>
-
-			<p>
+            <p>
 				<label for="degree">What degree did/do you do?</label>
 				<select name="degree" multiple>
 					{% for degree in degrees %}
