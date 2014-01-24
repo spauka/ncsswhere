@@ -1,5 +1,6 @@
 import sqlite3
-from bottle import get, post, request, route, run, jinja2_template, static_file, redirect
+from bottle import *
+import json
 
 import database
 
@@ -36,6 +37,32 @@ def post_ncsser():
         return "You're already in the DB!"
     else:
         redirect('/')
+
+@get('/api/ncsser')
+def get_ncssers():
+    # Set headers
+    response.set_header('Content-Type', 'application/json')
+
+    conn = database.connect()
+    c = conn.cursor()
+
+    # First get a list of all NCSSers
+    ncssers = {}
+    for ncsser in c.execute('SELECT * FROM ncsser'):
+        ncssers[ncsser[0]] = database.NCSSer(ncsser[0], ncsser[1], [], [], [], [])
+    # Fill in the years
+    for year in c.execute('SELECT ncssid, year, tutor FROM years'):
+        if year[2]:
+            ncssers[year[0]].years_tut.append(year[1])
+        else:
+            ncssers[year[0]].years_stud.append(year[1])
+    # And the degrees and unis
+    for uni in c.execute('SELECT nu.ncssid, u.name FROM ncss_unis nu INNER JOIN unis u ON nu.uni = u.id'):
+        ncssers[uni[0]].unis.append(uni[1])
+    for degree in c.execute('SELECT nd.ncssid, d.name FROM ncss_degrees nd INNER JOIN degrees d ON nd.degree = d.id'):
+        ncssers[degree[0]].degrees.append(degree[1])
+
+    return json.dumps(list(ncsser._asdict() for ncsser in ncssers.values()))
 
 @post('/degree')
 def add_degree():

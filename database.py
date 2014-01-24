@@ -3,6 +3,7 @@ from collections import namedtuple
 
 Uni = namedtuple('Uni', ['id', 'name'])
 Degree = namedtuple('Degree', ['id', 'name', 'cs'])
+NCSSer = namedtuple('NCSSer', ['id', 'name', 'years_stud', 'years_tut', 'unis', 'degrees'])
 
 def get_unis(conn):
     c = conn.cursor()
