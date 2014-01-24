@@ -21,15 +21,25 @@
 
 		<p>
 			<label for="uni">Which Uni did/do you go to?</label>
-			<select name="uni" multi-select>
+            <select name="uni" multiple>
+                {% for uni in unis %}
+                <option value={{uni.id}}>{{uni.name}}</option>
+                {% endfor %}
 			</select>
 		</p>
 
 		<p>
 			<label for="degree">What degree did/do you do?</label>
-			<select name="degree" multi-select>
+            <select name="degree" multiple>
+                {% for degree in degrees %}
+                <option value={{degree.id}}>{{degree.name}}</option>
+                {% endfor %}
 			</select>
-		</p>
+        </p>
+
+        <p>
+            <button type="submit">Submit!</button>
+        </p>
 	</form>
 </body>
 </html>
