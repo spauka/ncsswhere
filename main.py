@@ -62,7 +62,17 @@ def get_ncssers():
     for degree in c.execute('SELECT nd.ncssid, d.name FROM ncss_degrees nd INNER JOIN degrees d ON nd.degree = d.id'):
         ncssers[degree[0]].degrees.append(degree[1])
 
-    return json.dumps(list(ncsser._asdict() for ncsser in ncssers.values()))
+    return json.dumps([ncsser._asdict() for ncsser in ncssers.values()])
+
+@get('/api/unis')
+def get_unis():
+    # Set headers
+    response.set_header('Content-Type', 'application/json')
+
+    conn = database.connect()
+    unis = database.get_unis(conn)
+
+    return json.dumps({uni.name: uni._asdict() for uni in unis})
 
 @post('/degree')
 def add_degree():

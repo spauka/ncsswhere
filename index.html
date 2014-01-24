@@ -10,7 +10,52 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
 	<script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
-	<script src="js/map.js"></script>
+    <script src="js/map.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+    <script type="text/javascript">
+        google.load("visualization", "1", {packages:["corechart"]});
+        google.setOnLoadCallback(getData);
+
+        function genChart(data) {
+            // First we'll figure out how many people went on to do CS
+            var CSDegrees = ["Computer Science", "Computer Engineering", "IT"];
+
+            // Now calculate the number of people doing degrees
+            var yes = 0;
+            var no = 0;
+            data.forEach(function(entry) {
+                doesCS = false;
+                CSDegrees.forEach(function(degree) {
+                    if (jQuery.inArray(degree, entry.degrees) != -1)
+                        doesCS = true;
+                });
+                if (doesCS)
+                    yes++;
+                else
+                    no++;
+            });
+
+            var CS = new google.visualization.arrayToDataTable([
+                ["Does Computer Science?", "Number"],
+                ["Comp Sci", yes],
+                ["Other", no]]);
+
+            var options = {
+                pieHole: 0.4,
+                pieSliceText: 'label',
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('doughnutchart'));
+            chart.draw(CS, options);
+        }
+
+        function getData() {
+            $.getJSON("/api/ncsser").done(function(data) {
+                    genChart(data);
+            });
+        }
+    </script>
 </head>
 <body>
 	<header>
@@ -25,7 +70,8 @@
 
 	<article>
 		<h1>How many NCSSers went on to study Computer Science?</h1>
-		<figure>
+        <figure>
+            <div id="doughnutchart" style="align: center; width: 900px; height: 500px;"></div>
 		</figure>
 	</article>
 </body>
