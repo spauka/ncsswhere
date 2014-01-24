@@ -33,6 +33,7 @@ header {
 		float: right;
 		padding-top: 12px;
 		padding-right: 8px;
+		margin: 0px;
 	}
 
 article {
@@ -60,3 +61,30 @@ a {
 	font-weight: bold;
 	text-decoration: none;
 }
+
+form {
+	width: 750px;
+	margin: auto;
+}
+	form p {
+		margin: 20px;
+	}
+	label {
+		font-weight: bold;
+	}
+	input, .chosen-container {
+		float: right;
+		margin: 0px;
+		width: 240px;
+	}
+	input {
+		padding: 5px;
+		border: solid 1px #aaa;
+	}
+	button {
+		font-family: 'nexa';
+		font-size: 22px;
+		font-weight: bold;
+		float: right;
+		padding: 10px;
+	}

@@ -5,41 +5,59 @@
 	<title>Where in the world is NCSS?</title>
 	<link rel="stylesheet" type="text/css" href="fonts/nexa.css">
 	<link rel="stylesheet" type="text/css" href="css/reset.css">
+	<link rel="stylesheet" type="text/css" href="css/chosen.min.css">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
+	<script src="js/chosen.jquery.min.js" type="text/javascript"></script>
+	<script>
+		$(function() {
+			$('select').chosen({
+				width: '250px',
+				padding: '5px',
+			});
+		});
+	</script>
 </head>
 <body>
-	<form action="/ncsser" method="POST">
-		<p>
-			<label for="name">What is your name?</label>
-			<input name="name"></input>
-		</p>
+	<header>
+		<h1>NCSS</h1><h2>Where are they now?</h2>
+		<p>Where are your fellow NCSSers? <a href="/">view the map</a></p>
+	</header>
 
-		<p>
-			<label for="years">When did you attend NCSS?</label>
-			<input name="years"></input>
-		</p>
+	<article>
+		<form action="/ncsser" method="POST">
+			<p>
+				<label for="name">What is your name?</label>
+				<input name="name"></input>
+			</p>
 
-		<p>
-			<label for="uni">Which Uni did/do you go to?</label>
-            <select name="uni" multiple>
-                {% for uni in unis %}
-                <option value={{uni.id}}>{{uni.name}}</option>
-                {% endfor %}
-			</select>
-		</p>
+			<p>
+				<label for="years">When did you attend NCSS?</label>
+				<input name="years"></input>
+			</p>
 
-		<p>
-			<label for="degree">What degree did/do you do?</label>
-            <select name="degree" multiple>
-                {% for degree in degrees %}
-                <option value={{degree.id}}>{{degree.name}}</option>
-                {% endfor %}
-			</select>
-        </p>
+			<p>
+				<label for="uni">Which Uni did/do you go to?</label>
+				<select name="uni" multiple>
+					{% for uni in unis %}
+					<option value={{uni.id}}>{{uni.name}}</option>
+					{% endfor %}
+				</select>
+			</p>
 
-        <p>
-            <button type="submit">Submit!</button>
-        </p>
-	</form>
+			<p>
+				<label for="degree">What degree did/do you do?</label>
+				<select name="degree" multiple>
+					{% for degree in degrees %}
+					<option value={{degree.id}}>{{degree.name}}</option>
+					{% endfor %}
+				</select>
+			</p>
+
+			<p>
+				<button type="submit">Submit!</button>
+			</p>
+		</form>
+	</article>
 </body>
 </html>
