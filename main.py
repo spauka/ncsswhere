@@ -25,8 +25,8 @@ def post_ncsser():
     name = request.forms.get('name')
     years_stud = request.forms.getall('years_stud')
     years_tut = request.forms.getall('years_tut')
-    unis = request.forms.getall('uni')[0]
-    degrees = request.forms.getall('degree')[0]
+    unis = request.forms.getall('uni')
+    degrees = request.forms.getall('degree')
 
     # Finally, add data to the DB!
     conn = database.connect()
@@ -46,7 +46,7 @@ def fonts(filename):
     return static_file(filename, root='fonts')
 @route('/js/<filename>')
 def js(filename):
-    return static_file('filename', root='js')
+    return static_file(filename, root='js')
 
 if __name__ == '__main__':
     run(host='localhost', port=8080)
