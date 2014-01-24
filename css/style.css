@@ -91,3 +91,7 @@ form {
 		float: right;
 		padding: 10px;
 	}
+
+#map {
+	height: 500px;
+}
